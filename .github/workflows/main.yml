@@ -25,6 +25,7 @@ jobs:
         run: cd simple-api && mvn clean verify
 
   build-and-push-docker-image:
+    environment: dev
     needs: test-backend
     runs-on: ubuntu-24.04
 
