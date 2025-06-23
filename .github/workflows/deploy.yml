@@ -2,7 +2,7 @@ name: build-and-push-docker-image
 
 on:
   workflow_run:
-    workflows: ["build-docker"]
+    workflows: ["build-and-push-docker-image"]
     types:
       - completed
 
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Python & Ansible
+      - name: Set up Python and Ansible
         run: |
           sudo apt-get update
           sudo apt install pipx -y
