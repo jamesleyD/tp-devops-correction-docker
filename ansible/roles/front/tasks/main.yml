@@ -1,0 +1,8 @@
+- name: Run Front container
+  community.docker.docker_container:
+    name: frontend
+    image: jamesley/tp-devops-simple-api-front:latest
+    networks:
+      - name: "{{ network_name }}"
+    state: started
+    restart_policy: always
