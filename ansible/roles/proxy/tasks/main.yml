@@ -8,3 +8,4 @@
       - name: "{{ network_name }}"
     state: started
     restart_policy: always
+    pull: yes
