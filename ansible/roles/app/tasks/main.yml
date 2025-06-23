@@ -1,0 +1,11 @@
+- name: Run simple-api container
+  community.docker.docker_container:
+    name: simple-api
+    image: jamesley/tp-devops-simple-api-backend:latest
+    env:
+      DATABASE_HOST: database
+      DATABASE_PASSWORD: "{{ db_password }}"
+    networks:
+      - name: "{{ network_name }}"
+    state: started
+    restart_policy: always

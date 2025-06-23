@@ -1,0 +1,36 @@
+name: build-and-push-docker-image
+
+on:
+  workflow_run:
+    workflows: ["build-docker"]
+    types:
+      - completed
+
+jobs:
+  build-and-push-docker-image:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-24.04
+    environment: dev
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python & Ansible
+        run: |
+          sudo apt-get update
+          sudo apt install pipx -y
+          pipx install --include-deps ansible
+
+      - name: Add SSH key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa_takima
+          chmod 600 ~/.ssh/id_rsa_takima
+          ssh-keyscan -H doxaintjamesley.takima.cloud >> ~/.ssh/known_hosts
+
+      - name: Run Ansible playbook
+        run: |
+          ansible-playbook -i ansible/inventories/setup.yml ansible/playbook.yml

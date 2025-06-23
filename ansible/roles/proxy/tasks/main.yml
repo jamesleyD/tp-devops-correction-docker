@@ -1,0 +1,10 @@
+- name: Run http-server container
+  community.docker.docker_container:
+    name: httpd
+    image: jamesley/tp-devops-simple-api-httpd:latest
+    published_ports:
+      - "80:80"
+    networks:
+      - name: "{{ network_name }}"
+    state: started
+    restart_policy: always

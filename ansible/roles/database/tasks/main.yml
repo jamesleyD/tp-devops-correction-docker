@@ -1,0 +1,16 @@
+- name: Create Docker volume for PostgreSQL
+  community.docker.docker_volume:
+    name: db-volume
+
+- name: Run PostgreSQL container
+  community.docker.docker_container:
+    name: database
+    image: jamesley/tp-devops-simple-api-database:latest
+    env:
+      POSTGRES_PASSWORD: "{{ db_password }}"
+    volumes:
+      - db-volume:/var/lib/postgresql/data
+    networks:
+      - name: "{{ network_name }}"
+    state: started
+    restart_policy: always

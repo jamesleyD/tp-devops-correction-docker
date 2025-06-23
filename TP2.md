@@ -7,6 +7,10 @@ C'est utile pour les tests où on veut une vraie bdd au lieu de simplement le mo
 
 Pour pas qu'elles soient visibles dans le code et on peut également les scopés
 
+### 2-3 Why did we put needs: build-and-test-backend on this job? Maybe try without this and you will see!
+
+Pour ne lancer que le job si les tests sont ok.
+
 ### 2-4 For what purpose do we need to push docker images?
 
 On construit l'image une fois et ensuite, on peut exécuter cette meme image sur n'importe quel serveur, environnement ou machine.
